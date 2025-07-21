@@ -1748,6 +1748,15 @@ public interface PrefsConstants extends com.google.gwt.i18n.client.Messages {
      *
      * @return translated "Show .Last.value in environment listing"
      */
+    @DefaultMessage("Chinese (简体中文)")
+    @Key("chineseLabel")
+    String chineseLabel();
+
+    /**
+     * Translated "Show .Last.value in environment listing".
+     *
+     * @return translated "Show .Last.value in environment listing"
+     */
     @DefaultMessage("Show .Last.value in environment listing")
     @Key("otherShowLastDotValueLabel")
     String otherShowLastDotValueLabel();

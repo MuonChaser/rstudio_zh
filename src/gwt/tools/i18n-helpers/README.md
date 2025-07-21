@@ -1,96 +1,90 @@
-# Summary
+# 摘要
 
-This README describes the internationalization (i18n) development workflow and helper tools available.
+本 README 介绍了国际化（i18n）开发流程及可用的辅助工具。
 
-After making any change (even whitespace-only) to Commands.cmd.xml, you must run one of
-`ant`, `ant draft`, or `ant generate-i18n` and commit all modified files along with Commands.cmd.xml.
-Failure to do this will break the RStudio build.
+每当对 Commands.cmd.xml 进行任何更改（即使只是空白字符），都必须运行 `ant`、`ant draft` 或 `ant generate-i18n` 之一，并将所有修改过的文件与 Commands.cmd.xml 一起提交。否则会导致 RStudio 构建失败。
 
-This workflow requires Python3 to be active, and the requirements in commands.cmd.xml/requirements.txt
-to have been installed (i.e. with `pip install -r requirements.txt`).
+此流程要求已启用 Python3，并且已安装 commands.cmd.xml/requirements.txt 中的依赖（即通过 `pip install -r requirements.txt`）。
 
-# i18n in RStudio
+# RStudio 的 i18n
 
-## Implementation Details
+## 实现细节
 
-i18n is implemented using GWT's [i18n](http://www.gwtproject.org/doc/latest/DevGuideI18n.html) features, typically through static string internationalization.  Until i18n has been enabled across RStudio, non-English locales are enabled only when running `ant` in `SuperDevMode`.  
+i18n 通过 GWT 的 [i18n](http://www.gwtproject.org/doc/latest/DevGuideI18n.html) 功能实现，通常采用静态字符串国际化。在 RStudio 完全启用 i18n 之前，非英文语言环境仅在 `SuperDevMode` 下运行 `ant` 时启用。
 
-To localize part of the codebase, define interfaces that extend `com.google.gwt.i18n.client.Constants` and `.Messages`.  Include `String`s with `@DefaultStringValue`s in the interfaces for all localized text, and cite these `String` objects in your code to get their text values.  To add locales to your application, add properties files called `INTERFACENAME_LOCALE.properties`.  An example of this implemented is available in `src/org/rstudio/studio/client/application/ui/AboutDialog.java`, which cites:
-* `AboutDialogConstants.java` (interface for constants)
-* `AboutDialogConstants_en.properties` (English locale for constants)
-* `AboutDialogConstants.java` (interface for messages)
-* `AboutDialogMessages_en.properties` (English locale for messages)
+要对部分代码库进行本地化，需定义扩展自 `com.google.gwt.i18n.client.Constants` 和 `.Messages` 的接口。在接口中为所有本地化文本包含带有 `@DefaultStringValue` 的 `String`，并在代码中引用这些 `String` 对象以获取文本值。要为应用添加语言环境，需添加名为 `INTERFACENAME_LOCALE.properties` 的属性文件。实现示例见 `src/org/rstudio/studio/client/application/ui/AboutDialog.java`，引用了：
+* `AboutDialogConstants.java`（常量接口）
+* `AboutDialogConstants_en.properties`（英文常量属性文件）
+* `AboutDialogConstants.java`（消息接口）
+* `AboutDialogMessages_en.properties`（英文消息属性文件）
 
-When debugging, access non-English locales from `SuperDevMode` by adding `?locale=yourLocale` to the RStudio URL (for example, `http://localhost:8787/?locale=yourLocale`).
+调试时，可通过在 RStudio URL 后添加 `?locale=yourLocale`（如 `http://localhost:8787/?locale=yourLocale`）访问非英文语言环境。
 
-When serving localized content, GWT will serve it in the following order:
-* Locale matching the locale selected, if available (if `?locale=en`, serve `*_en.properties` if it is available)
-* Default locale (defined in `RStudio.gwt.xml` or other XML files), if available
-* The `@DefaultStringValue` text
+GWT 提供本地化内容的顺序如下：
+* 优先匹配所选语言环境（如 `?locale=en`，则优先提供 `*_en.properties`，如果可用）
+* 默认语言环境（在 `RStudio.gwt.xml` 或其他 XML 文件中定义），如果可用
+* `@DefaultStringValue` 的文本
 
-GWT suggests you always include both a `@DefaultStringValue` and at least one `.properties` file.
+GWT 建议始终包含 `@DefaultStringValue` 和至少一个 `.properties` 文件。
 
-## Development Workflow 
+## 开发流程
 
-When implementing i18n and going from hard-coded English text to text from an English properties file, it can be hard to know what is/is not translated and whether your translations are actually working because you are "translating" without changing the visible content.  One workflow to help with this problem is to use a "dev" locale which applies easily visible changes to the text for development purposes.  The "dev" locale is:
-* a copy of the current English locale's `.properties` files, with "@" prepended to all constants and messages to make them clearly visible in the UI
-* enabled when in SuperDevMode (server or desktop) and accessible at `http://localhost:8787/?locale=dev`, but not accessible during production use (see `RStudioSuperDevMode.gwt.xml`/`RStudioDesktopSuperDevMode.gwt.xml`)
-* intended to be generated when needed during development and to be committed with the codebase (files are ignored in `.gitignore`)
+在实现 i18n、将硬编码英文文本替换为英文属性文件中的文本时，可能难以判断哪些内容已翻译、哪些未翻译，以及翻译是否生效。为解决此问题，可使用“dev”语言环境，在开发时对文本进行明显的可视化更改。该“dev”语言环境：
+* 是当前英文 `.properties` 文件的副本，所有常量和消息文本前加“@”，以便在 UI 中清晰可见
+* 仅在 SuperDevMode（服务器或桌面）下启用，可通过 `http://localhost:8787/?locale=dev` 访问，生产环境不可用（见 `RStudioSuperDevMode.gwt.xml`/`RStudioDesktopSuperDevMode.gwt.xml`）
+* 仅在开发时需要时生成，并随代码库提交（文件已在 `.gitignore` 中忽略）
 
-For example, below shows a "dev" locale where menus and commands have i18n support but other text does not:
+例如，以下为“dev”语言环境示例，菜单和命令已支持 i18n，其他文本未支持：
 
-![Example of partly-translated dev locale](./rstudio-dev-locale-example.png)
+![部分翻译的 dev 语言环境示例](./rstudio-dev-locale-example.png)
 
-# Tools
+# 工具
 
-The following tools are included to help with i18n development:
+以下工具可辅助 i18n 开发：
 
 ## create_dev_locale.sh
 
-Useful for debugging i18n and visually confirming what is/is not i18n-enabled by creating `*_dev.properties` files from
-existing `*_en.properties` files.  The script copies the English properties files and prefixes their texts with `@`.
+用于调试 i18n，通过从现有 `*_en.properties` 文件创建 `*_dev.properties` 文件，帮助直观确认哪些内容已启用 i18n。该脚本会复制英文属性文件，并在文本前加“@”。
 
-Run this script from `/src/gwt/src` with syntax `./create_dev_locale.sh`
+请在 `/src/gwt/src` 目录下运行，语法为 `./create_dev_locale.sh`
 
 ## commands_xml_to_i18n.py
 
-### Summary
+### 简介
 
-Auto-generates java interfaces and properties files for all commands and menus defined with `Commands.cmd.xml` using 
-the English text in that file.  This script must be run whenever `Commands.cmd.xml` is edited, and is automatically
-executed whenever changes to this file are detected and the `build`, `desktop`, or `devmode` ant targets are triggered.
+根据 `Commands.cmd.xml` 中定义的所有命令和菜单，自动生成 Java 接口和属性文件，使用该文件中的英文文本。每次编辑 `Commands.cmd.xml` 后必须运行此脚本，且在检测到该文件变更并触发 `build`、`desktop` 或 `devmode` ant 目标时会自动执行。
 
-Usage below shows how to trigger the scripts manually (instead of via ant buildfile targets) for the creation of English
-and "dev" locales, as discussed above for `create_dev_locale.sh`
+以下用法展示了如何手动触发脚本（而不是通过 ant 构建目标），以创建英文和“dev”语言环境，如上文 `create_dev_locale.sh` 所述。
 
-TODO: Shortcuts in Commands.cmd.xml are not currently localizable.
+TODO：Commands.cmd.xml 中的快捷键目前无法本地化。
 
-### Usage
+### 用法
 
-See `commands_xml_to_i18n.py -h` for more details on options.
+详细选项请参见 `commands_xml_to_i18n.py -h`。
 
-Typical usage (from the `commands.cmd.xml` subfolder) is:
+典型用法（在 `commands.cmd.xml` 子文件夹下）如下：
 
 ```shell
 CMD_DIR="../../../src/org/rstudio/studio/client/workbench/commands/"
 
-# Commands
-# Interface (no prefix added to texts)
+# 命令
+# 接口（文本不加前缀）
 python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" cmd constant "${CMD_DIR}/CmdConstants.java" --package "package org.rstudio.studio.client.workbench.commands;"
-# English (en) properties file (no prefix added to texts)
+# 英文（en）属性文件（文本不加前缀）
 python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" cmd properties "${CMD_DIR}/CmdConstants_en.properties"
-# (optional) Development (dev) properties file (prefix "@" added to all texts for development - see Summary)
+# （可选）开发（dev）属性文件（文本前加“@”，用于开发，见简介）
 python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" cmd properties "${CMD_DIR}/CmdConstants_dev.properties" --prefix "@"
 
-# Menus
-# Interface (no prefix added to texts)
+# 菜单
+# 接口（文本不加前缀）
 python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" menu constant "${CMD_DIR}/MenuConstants.java" --package "package org.rstudio.studio.client.workbench.commands;"
-# English (en) properties file (no prefix added to texts)
+# 英文（en）属性文件（文本不加前缀）
 python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" menu properties "${CMD_DIR}/MenuConstants_en.properties"
-# (optional) Development (dev) properties file (prefix "@" added to all texts for development - see Summary)
+# （可选）开发（dev）属性文件（文本前加“@”，用于开发，见简介）
 python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" menu properties "${CMD_DIR}/MenuConstants_dev.properties" --prefix "@"
 ```
 
-### Tests
+### 测试
 
-A minimal test suite for the tool is available using `python -m pytest ./test_command.py`
+该工具提供了一个最小测试套件，可通过 `python -m pytest ./test_command.py` 运行。
+

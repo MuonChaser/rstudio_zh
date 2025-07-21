@@ -394,11 +394,13 @@ public class GeneralPreferencesPane extends PreferencesPane
 
       String[] langLabels = {
          constants_.englishLabel(),
-         constants_.frenchLabel()
+         constants_.frenchLabel(),
+         constants_.chineseLabel()
       };
       String[] langValues = {
          UserPrefsAccessor.UI_LANGUAGE_EN,
-         UserPrefsAccessor.UI_LANGUAGE_FR
+         UserPrefsAccessor.UI_LANGUAGE_FR,
+         UserPrefsAccessor.UI_LANGUAGE_ZH
       };
       uiLanguage_ = new SelectWidget(prefs_.uiLanguage().getTitle(),
          langLabels,

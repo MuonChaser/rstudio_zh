@@ -12,7 +12,7 @@
 PREFIX="@"
 
 for src in $(find . -name "*en.properties"); do
-  tgt=$(echo "$src" | sed -e 's/_en.properties$/_dev.properties/')
+  tgt=$(echo "$src" | sed -e 's/_en.properties$/_ch.properties/')
   echo "Copying $src -> $tgt"
   if [ -f "$tgt" ]; then
   	echo "WARNING: Target $tgt already exists - skipping"

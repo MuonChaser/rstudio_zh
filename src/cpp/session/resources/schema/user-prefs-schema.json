@@ -1672,8 +1672,8 @@
         },
          "ui_language": {
             "type": "string",
-            "enum": ["en", "fr"],
-            "default": "en",
+            "enum": ["en", "fr", "cn"],
+            "default": "cn",
             "title": "User Interface Language:",
             "description": "The IDE's user-interface language."
         },
