@@ -16,6 +16,7 @@
 import i18next from 'i18next';
 import * as en from '../assets/locales/en.json';
 import * as fr from '../assets/locales/fr.json';
+import * as ch from '../assets/locales/ch.json';
 
 // Initialize the translation resources, as required for a document.
 const initI18n = () => {
@@ -24,6 +25,7 @@ const initI18n = () => {
       resources: {
         en: { translation: en },
         fr: { translation: fr },
+        ch: { translation: ch },
       },
       fallbackLng: 'en',
     })

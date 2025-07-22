@@ -137,10 +137,10 @@
    <set-configuration-property name="locale.cookie" value="LOCALE"/>
 
    <!-- Specify supported locales -->
-   <extend-property name="locale" values="en,fr"/>
+   <extend-property name="locale" values="en,fr, ch"/>
 
    <!-- remove the 'default' locale permutation as it does not support plurals -->
-   <set-property name="locale" value="en,fr"/>
+   <set-property name="locale" value="en,fr,ch"/>
 
    <!-- Set default locale to en -->
    <set-property-fallback name="locale" value="en"/>
