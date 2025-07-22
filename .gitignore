@@ -55,3 +55,15 @@ venv/
 
 CLAUDE.md
 .claude/
+_CPack_Packages/
+_deps/
+CMakeFiles/
+package/
+*.cmake
+CMakeCache.txt
+install_manifest.txt
+Makefile
+*.tar.gz
+*.tar.Z
+SOURCE
+VERSION
