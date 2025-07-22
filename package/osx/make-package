@@ -33,7 +33,7 @@ Build RStudio Electron Desktop and redistributable package (DMG) on a Mac.
 Specify version by setting environment variables. The default is 99.9.9.
 
 Examples
-  RSTUDIO_VERSION_MAJOR=2022 RSTUDIO_VERSION_MINOR=7 RSTUDIO_VERSION_PATCH=1 RSTUDIO_VERSION_SUFFIX=-daily+321 ./make-package clean --electron
+  RSTUDIO_VERSION_MAJOR=2025 RSTUDIO_VERSION_MINOR=7 RSTUDIO_VERSION_PATCH=1 RSTUDIO_VERSION_SUFFIX=-daily+321 ./make-package clean --electron
 
 Options
   clean, --clean

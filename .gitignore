@@ -58,7 +58,7 @@ CLAUDE.md
 _CPack_Packages/
 _deps/
 CMakeFiles/
-package/
+
 *.cmake
 CMakeCache.txt
 install_manifest.txt
