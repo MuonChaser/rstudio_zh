@@ -71,7 +71,7 @@ CMD_DIR="../../../src/org/rstudio/studio/client/workbench/commands/"
 # 接口（文本不加前缀）
 python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" cmd constant "${CMD_DIR}/CmdConstants.java" --package "package org.rstudio.studio.client.workbench.commands;"
 # 英文（en）属性文件（文本不加前缀）
-python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" cmd properties "${CMD_DIR}/CmdConstants_en.properties"
+python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" cmd properties "${CMD_DIR}/CmdConstants_ch.properties"
 # （可选）开发（dev）属性文件（文本前加“@”，用于开发，见简介）
 python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" cmd properties "${CMD_DIR}/CmdConstants_dev.properties" --prefix "@"
 
@@ -79,7 +79,7 @@ python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" cmd properties "${C
 # 接口（文本不加前缀）
 python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" menu constant "${CMD_DIR}/MenuConstants.java" --package "package org.rstudio.studio.client.workbench.commands;"
 # 英文（en）属性文件（文本不加前缀）
-python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" menu properties "${CMD_DIR}/MenuConstants_en.properties"
+python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" menu properties "${CMD_DIR}/MenuConstants_ch.properties"
 # （可选）开发（dev）属性文件（文本前加“@”，用于开发，见简介）
 python commands_xml_to_i18n.py "${CMD_DIR}/Commands.cmd.xml" menu properties "${CMD_DIR}/MenuConstants_dev.properties" --prefix "@"
 ```

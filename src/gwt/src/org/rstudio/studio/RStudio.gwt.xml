@@ -142,8 +142,8 @@
    <!-- remove the 'default' locale permutation as it does not support plurals -->
    <set-property name="locale" value="en,fr,ch"/>
 
-   <!-- Set default locale to en -->
-   <set-property-fallback name="locale" value="en"/>
+   <!-- Set default locale to ch -->
+   <set-property-fallback name="locale" value="ch"/>
 
    <!-- Collapse properties -->
    <set-property name="compiler.useSymbolMaps" value="true" />
